@@ -9,5 +9,5 @@ class City:
     def get_name(self):
         return self._name
 
-    def get_distance(self):
+    def get_distances(self):
         return self._distances
