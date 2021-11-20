@@ -1,3 +1,6 @@
+from entities.SubjectScore import SubjectScore
+
+
 class SubjectCalculator:
 
     @staticmethod
@@ -12,3 +15,11 @@ class SubjectCalculator:
                     distance += city_distance.get_distance()
                     break
         return distance
+
+    @staticmethod
+    def get_best_subjects(subjects):
+        subject_scores = []
+        for subject in subjects:
+            subject_scores.append(SubjectScore(subject, SubjectCalculator.evaluate(subject)))
+        subject_scores.sort(key=lambda x: x.get_score())
+        return subject_scores
