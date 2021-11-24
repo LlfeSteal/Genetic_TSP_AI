@@ -9,9 +9,16 @@ class SubjectScoreManager:
         self.generate_probabilities()
 
     def generate_probabilities(self):
-        sum = reduce(lambda a, b: a.get_score() + b.get_score(), self._subject_scores)
+        total = self.calculate_sum()
         for subject_score in self._subject_scores:
-            self.probabilities.append((subject_score.get_score() / sum))
+            self.probabilities.append((subject_score.get_score() / total))
+
+    def calculate_sum(self):
+        total = 0
+        for subject_score in self._subject_scores:
+            total += subject_score.get_score()
+        return total
 
     def pick_subject(self):
-        return np.random.choice(self._subject_scores, 1, p=self.probabilities)
+        choice = np.random.choice(self._subject_scores, 1, p=self.probabilities)
+        return choice[0].get_subject()
