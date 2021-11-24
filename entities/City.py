@@ -11,3 +11,6 @@ class City:
 
     def get_distances(self):
         return self._distances
+
+    def __str__(self):
+        return self._name
