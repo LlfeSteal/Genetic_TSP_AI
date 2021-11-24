@@ -1,3 +1,5 @@
+import numpy as np
+
 from entities.SubjectScore import SubjectScore
 
 
@@ -6,9 +8,10 @@ class SubjectCalculator:
     @staticmethod
     def evaluate(subject):
         distance = 0
-        cities = subject.get_cities()
+        cities = subject.get_cities().tolist()
         cities.append(cities[0])
-        for index, city in cities:
+        for city in cities:
+            index = cities.index(city)
             next_city = cities[index + 1]
             for city_distance in city.get_distances():
                 if city_distance.get_city().get_name() == next_city.get_name():
