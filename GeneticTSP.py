@@ -53,3 +53,7 @@ class GeneticTSP:
             for city in subject.get_cities():
                 subject_cities.append(str(city))
             print("SUBJECT", subject_cities)
+
+    def get_best_subjects(self, limit=5):
+        best_subjects = SubjectCalculator.get_best_subjects(self.population)
+        return best_subjects[:limit][0].get_subject()
