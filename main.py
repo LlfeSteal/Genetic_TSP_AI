@@ -16,4 +16,6 @@ if __name__ == '__main__':
         genetic_tsp.generate_new_population()
     genetic_tsp.display_population_status()
     print("best : ", str(genetic_tsp.get_best_subjects(1)))
+    print("-----------------------------------------------------------")
+    genetic_tsp.display_population_score()
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
