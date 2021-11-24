@@ -47,3 +47,9 @@ class GeneticTSP:
         child2 = np.append(subject2_citites[:cross_index], subject1_cities[cross_index:])
         return [child1, child2]
 
+    def display_population_status(self):
+        for subject in self.population:
+            subject_cities = []
+            for city in subject.get_cities():
+                subject_cities.append(str(city))
+            print("SUBJECT", subject_cities)
