@@ -20,7 +20,10 @@ class GeneticTSP:
             self.population.append(Subject(self.get_random_cities()))
 
     def get_random_cities(self):
-        return random.shuffle(self.city_manager.get_cities())
+        new_cities = []
+        new_cities = np.append(new_cities, self.city_manager.get_cities())
+        np.random.shuffle(new_cities)
+        return new_cities
 
     def generate_new_population(self):
         new_generation = []
@@ -31,12 +34,16 @@ class GeneticTSP:
             subject2 = subject_score_manager.pick_subject()
             np.append(new_generation, self.generate_new_childs(subject1, subject2))
         missing_subject_number = self.population_number - len(new_generation)
-        np.append(new_generation, best_subjects[:missing_subject_number])
+        for i in range(missing_subject_number):
+            new_generation.append(best_subjects[i].get_subject())
         self.population = new_generation
 
     @staticmethod
     def generate_new_childs(subject1, subject2):
         cross_index = random.randint(3, 7)
-        child1 = np.append(subject1[:cross_index], subject2[cross_index:])
-        child2 = np.append(subject2[:cross_index], subject1[cross_index:])
+        subject1_cities = subject1.get_cities()
+        subject2_citites = subject2.get_cities()
+        child1 = np.append(subject1_cities[:cross_index], subject2_citites[cross_index:])
+        child2 = np.append(subject2_citites[:cross_index], subject1_cities[cross_index:])
         return [child1, child2]
+
