@@ -29,6 +29,10 @@ class GeneticTSP:
         for i in range(int(self.population_to_cross / 2)):
             subject1 = subject_score_manager.pick_subject()
             subject2 = subject_score_manager.pick_subject()
+            np.append(new_generation, self.generate_new_childs(subject1, subject2))
+        missing_subject_number = self.population_number - len(new_generation)
+        np.append(new_generation, best_subjects[:missing_subject_number])
+        self.population = new_generation
 
     @staticmethod
     def generate_new_childs(subject1, subject2):
