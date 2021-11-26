@@ -8,9 +8,10 @@ import numpy as np
 
 
 class GeneticTSP:
-    def __init__(self, population_number=40, population_to_cross=30):
+    def __init__(self, population_number=40, population_to_cross=30, mutation_rate=0.05):
         self.population_number = population_number
         self.population_to_cross = population_to_cross
+        self.mutation_rate = mutation_rate
         self.city_manager = CityManager()
         self.population = []
         self.generate_population()
@@ -38,14 +39,13 @@ class GeneticTSP:
             new_generation.append(best_subjects[i].get_subject())
         self.population = new_generation
 
-    @staticmethod
-    def generate_new_childs(subject1, subject2):
+    def generate_new_childs(self, subject1, subject2):
         cross_index = random.randint(3, 7)
         subject1_cities = subject1.get_cities()
         subject2_citites = subject2.get_cities()
         child1 = np.append(subject1_cities[:cross_index], subject2_citites[cross_index:])
         child2 = np.append(subject2_citites[:cross_index], subject1_cities[cross_index:])
-        return [child1, child2]
+        return [self.roll_mutation(Subject(child1)), self.roll_mutation(Subject(child2))]
 
     def display_population_status(self):
         for subject in self.population:
@@ -65,3 +65,22 @@ class GeneticTSP:
     def get_best_subjects(self, limit=5):
         best_subjects = SubjectCalculator.get_best_subjects(self.population)
         return best_subjects[:limit][0].get_subject()
+
+    def roll_mutation(self, subject):
+        if random.randint(0, 100) < self.mutation_rate:
+            return self.apply_mutation(subject)
+        return subject
+
+    @staticmethod
+    def apply_mutation(subject):
+        print("MUTATION", subject)
+        index = random.randint(0, len(subject.get_cities()) - 1)
+        next_index = index + 1
+        if index == len(subject.get_cities())-1:
+            next_index = 0
+        city = subject.get_city(index)
+        next_city = subject.get_city(next_index)
+        subject.set_city(index, next_city)
+        subject.set_city(next_index, city)
+        print('AFTER MUTATION', subject)
+        return subject
