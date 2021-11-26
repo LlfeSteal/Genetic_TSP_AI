@@ -5,6 +5,12 @@ class Subject:
     def get_cities(self):
         return self._cities
 
+    def get_city(self, index):
+        return self._cities[index]
+
+    def set_city(self, index, city):
+        self._cities[index] = city
+
     def __str__(self):
         cities_names = []
         for city in self._cities:
