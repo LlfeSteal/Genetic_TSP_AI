@@ -12,7 +12,7 @@ class CityFactory:
     def init_cities(self, cities_number):
         cities = []
         for city in range(cities_number):
-            cities.append(City(str(city)))
+            cities.append(City(str(city), self.get_random_coordinates_coordinates()))
         CityFactory.generate_city_distances(cities)
         return cities
 
@@ -25,6 +25,12 @@ class CityFactory:
                 first_city.add_distance(CityDistance(second_city, distance))
                 second_city.add_distance(CityDistance(first_city, distance))
         cities_set.remove(cities_set[0])
+
+    def get_random_coordinates_coordinates(self):
+        random_x = random.randint(0, self._max_distance)
+        random_y = random.randint(0, self._max_distance)
+        return random_x, random_y
+
 
 
 
