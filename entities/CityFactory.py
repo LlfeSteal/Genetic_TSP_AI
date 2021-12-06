@@ -14,7 +14,7 @@ class CityFactory:
         cities = []
         for city in range(cities_number):
             cities.append(City(str(city), self.get_random_coordinates_coordinates()))
-        CityFactory.generate_city_distances(cities)
+        self.generate_city_distances(cities)
         return cities
 
     def generate_city_distances(self, cities):
