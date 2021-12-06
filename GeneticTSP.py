@@ -62,3 +62,7 @@ class GeneticTSP:
 
     def get_graph_generator(self):
         return self.graph_generator
+
+    def display_graph(self):
+        self.graph_generator.create_graph()
+        self.graph_generator.display()
