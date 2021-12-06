@@ -6,16 +6,17 @@ from entities.CityDistance import CityDistance
 
 class CityFactory:
 
-    @staticmethod
-    def init_cities(cities_number):
+    def __init__(self, max_distance):
+        self._max_distance = max_distance
+
+    def init_cities(self, cities_number):
         cities = []
         for city in range(cities_number):
             cities.append(City(str(city)))
         CityFactory.generate_city_distances(cities)
         return cities
 
-    @staticmethod
-    def generate_city_distances(cities):
+    def generate_city_distances(self, cities):
         cities_set = cities[:]
         cities_set.remove(cities_set[0])
         for first_city in cities:
@@ -24,4 +25,6 @@ class CityFactory:
                 first_city.add_distance(CityDistance(second_city, distance))
                 second_city.add_distance(CityDistance(first_city, distance))
         cities_set.remove(cities_set[0])
+
+
 
