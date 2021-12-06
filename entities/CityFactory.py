@@ -22,7 +22,7 @@ class CityFactory:
         cities_set.remove(cities_set[0])
         for first_city in cities:
             for second_city in cities_set:
-                distance = random.randint(0, 1000)
+                distance = self.get_distance_between_two_cities(first_city, second_city)
                 first_city.add_distance(CityDistance(second_city, distance))
                 second_city.add_distance(CityDistance(first_city, distance))
         cities_set.remove(cities_set[0])
