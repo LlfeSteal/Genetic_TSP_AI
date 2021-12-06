@@ -1,6 +1,7 @@
 class City:
-    def __init__(self, name):
+    def __init__(self, name, coordinates):
         self._name = name
+        self.coordinates = coordinates
         self._distances = []
 
     def add_distance(self, city_distance):
