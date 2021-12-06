@@ -12,9 +12,8 @@ class GeneticTSP:
     def __init__(self, population_number=40, population_to_cross=30, max_distance=900, mutation_rate=0.05):
         self.population_number = population_number
         self.population_to_cross = population_to_cross
-        self.city_manager = CityManager(max_distance)
         self.mutation_rate = mutation_rate
-        self.city_manager = CityManager()
+        self.city_manager = CityManager(max_distance)
         self.population = []
         self.generate_population()
         self.graph_generator = GraphGenerator(self.city_manager.get_cities(), max_distance)
@@ -77,13 +76,13 @@ class GeneticTSP:
         self.graph_generator.display()
 
     def roll_mutation(self, subject):
-        if random.randint(0, 100) < self.mutation_rate:
+        rand = random.uniform(0.0, 100.0)
+        if rand < self.mutation_rate:
             return self.apply_mutation(subject)
         return subject
 
     @staticmethod
     def apply_mutation(subject):
-        print("MUTATION", subject)
         index = random.randint(0, len(subject.get_cities()) - 1)
         next_index = index + 1
         if index == len(subject.get_cities())-1:
@@ -92,5 +91,4 @@ class GeneticTSP:
         next_city = subject.get_city(next_index)
         subject.set_city(index, next_city)
         subject.set_city(next_index, city)
-        print('AFTER MUTATION', subject)
         return subject
