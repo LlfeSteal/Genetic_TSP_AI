@@ -1,6 +1,7 @@
 import random
 
 from entities.CityManager import CityManager
+from entities.GraphGenerator import GraphGenerator
 from entities.Subject import Subject
 from entities.SubjectCalculator import SubjectCalculator
 from entities.SubjectScoreManager import SubjectScoreManager
@@ -8,12 +9,13 @@ import numpy as np
 
 
 class GeneticTSP:
-    def __init__(self, population_number=40, population_to_cross=30):
+    def __init__(self, population_number=40, population_to_cross=30, max_distance=900):
         self.population_number = population_number
         self.population_to_cross = population_to_cross
-        self.city_manager = CityManager()
+        self.city_manager = CityManager(max_distance)
         self.population = []
         self.generate_population()
+        self.graph_generator = GraphGenerator(self.city_manager.get_cities(), max_distance)
 
     def generate_population(self):
         for subject_number in range(self.population_number):
@@ -57,3 +59,6 @@ class GeneticTSP:
     def get_best_subjects(self, limit=5):
         best_subjects = SubjectCalculator.get_best_subjects(self.population)
         return best_subjects[:limit][0].get_subject()
+
+    def get_graph_generator(self):
+        return self.graph_generator
