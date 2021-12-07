@@ -9,7 +9,8 @@ import numpy as np
 
 
 class GeneticTSP:
-    def __init__(self, population_number=40, population_to_cross=30, max_distance=900, mutation_rate=0.05, city_number=13):
+    def __init__(self, population_number=40, population_to_cross=30, max_distance=900, mutation_rate=0.05,
+                 city_number=13):
         self.city_number = city_number
         self.population_to_cross = population_to_cross
         self.population_number = population_number
@@ -44,13 +45,24 @@ class GeneticTSP:
         self.population = new_generation
 
     def generate_new_childs(self, subject1, subject2):
-        # cross_index = random.randint(2, self.city_number-2)
-        cross_index = 4
         subject1_cities = subject1.get_cities()
-        subject2_citites = subject2.get_cities()
-        child1 = np.append(subject1_cities[:cross_index], subject2_citites[cross_index:])
-        child2 = np.append(subject2_citites[:cross_index], subject1_cities[cross_index:])
+        subject2_cities = subject2.get_cities()
+
+        child1 = self.cross_childs(subject1_cities, subject2_cities)
+        child2 = self.cross_childs(subject2_cities, subject1_cities)
         return [self.roll_mutation(Subject(child1)), self.roll_mutation(Subject(child2))]
+
+    def cross_childs(self, child1, child2):
+        cross_index = 4
+        new_child = []
+        new_child = np.append(new_child, child1[:cross_index])
+        for city in child2[cross_index:]:
+            if city not in new_child:
+                new_child = np.append(new_child, city)
+        missing_cities = self.city_manager.get_missing_cities(new_child)
+        new_child = np.append(new_child, missing_cities)
+
+        return new_child
 
     def display_population_status(self):
         for subject in self.population:
@@ -88,7 +100,7 @@ class GeneticTSP:
     def apply_mutation(subject):
         index = random.randint(0, len(subject.get_cities()) - 1)
         next_index = index + 1
-        if index == len(subject.get_cities())-1:
+        if index == len(subject.get_cities()) - 1:
             next_index = 0
         city = subject.get_city(index)
         next_city = subject.get_city(next_index)
